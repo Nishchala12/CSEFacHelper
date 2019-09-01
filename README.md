@@ -1,12 +1,6 @@
 # CSEFacHelper
 Designed to effectively manage the details of all students (attendance percentage, marks, lab internals) to ease the faculty's workload and keep an accurate track record for each student . 
 
-1. Item 1
-1. Item 2
-1. Item 3
-   1. Item 3a
-   1. Item 3b
-
 ## Installation 
 1. Download the java project
 1. Import the maven project to eclipse
