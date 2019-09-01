@@ -13,9 +13,9 @@ Designed to effectively manage the details of all students (attendance percentag
 1. The java project will take a while to finish the build as it downloads the maven dependencies
 1. To import the external dependencies follow the below instructions :
    1. Right-Click on the project and go to Properties
-   1. Go to on Java Build Path and Click on Add Library 
+   1. Go to Java Build Path and Click on Add Library 
    1. Select Add User Library and Click on User Library on the right
-          iv. Click on New and enter the library name as "Design", Click Ok
-          v. Download the jar files for Design Library from:- https://drive.google.com/open?id=1DLoLc_70QCP_onJmdN9ws28ZcjbQf4n_
-          vi. Select the Design Library and click on add external jars locate the jars you downloaded
-          vii. Similarily follow the same steps (d -> f) for "javafx", "jxl" and "Poi" Libraries
+   1. Click on New and enter the library name as "Design", Click Ok
+   1. Download the jar files for Design Library from:- https://drive.google.com/open?id=1DLoLc_70QCP_onJmdN9ws28ZcjbQf4n_
+   1. Select the Design Library and click on add external jars locate the jars you downloaded
+   1. Similarily follow the same steps (iv -> vi) for "javafx", "jxl" and "Poi" Libraries
