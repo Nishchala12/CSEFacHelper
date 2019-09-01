@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import de.jensd.fx.glyphs.materialdesignicons.MaterialDesignIconView?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.TitledPane?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane style="-fx-background-color: #6464a5;" stylesheets="@application.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.Attendance">
+   <children>
+      <AnchorPane fx:id="ap_attendance" layoutY="-1.0" style="-fx-background-color: #6464a5;">
+         <children>
+            <AnchorPane layoutX="-12.0" layoutY="6.0" prefHeight="1024.0" prefWidth="2142.0">
+               <children>
+                  <TableView fx:id="table" layoutX="444.0" layoutY="-1.0" prefHeight="1028.0" prefWidth="1143.0" />
+                  <VBox fx:id="utility_attend" layoutX="1552.0" layoutY="209.0" prefHeight="905.0" prefWidth="597.0">
+                     <children>
+                        <TitledPane animated="false" prefHeight="485.0" prefWidth="597.0" style="-fx-background-color: #40c4ff;" text="SPREADSHEET">
+                           <content>
+                              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="427.0" prefWidth="595.0">
+                                 <children>
+                                    <AnchorPane layoutX="-1.0">
+                                       <children>
+                                          <VBox prefHeight="426.0" prefWidth="525.0">
+                                             <children>
+                                                <Button fx:id="loadspbtn" mnemonicParsing="false" onAction="#loadAttendance" prefHeight="85.0" prefWidth="524.0" styleClass="hover-main" text="Load Spreadsheet">
+                                                   <graphic>
+                                                      <MaterialDesignIconView fill="#6464a5" glyphName="UPLOAD" size="30" />
+                                                   </graphic>
+                                                </Button>
+                                                <Button fx:id="importAttendanceSheet" mnemonicParsing="false" onAction="#importAttendanceFile" prefHeight="60.0" prefWidth="374.0" styleClass="hover-main" text="Import Attendance">
+                                                   <graphic>
+                                                      <MaterialDesignIconView fill="#6464a5" glyphName="UPLOAD" size="30" />
+                                                   </graphic>
+                                                </Button>
+                                                <Button fx:id="savespbtn" mnemonicParsing="false" onAction="#saveAttendance" prefHeight="86.0" prefWidth="525.0" styleClass="hover-main" text="Save Spreadsheet">
+                                                   <graphic>
+                                                      <MaterialDesignIconView fill="#6464a5" glyphName="CONTENT_SAVE" size="30" text="" />
+                                                   </graphic>
+                                                </Button>
+                                                <TitledPane fx:id="tpatt" prefHeight="285.0" prefWidth="612.0" text="ENTER DETAILS">
+                                                   <content>
+                                                      <VBox alignment="CENTER" prefHeight="248.0" prefWidth="523.0">
+                                                         <children>
+                                                            <TextField fx:id="subject" prefWidth="491.0" promptText="Enter Subject Name" />
+                                                            <TextField fx:id="semester" prefHeight="34.0" prefWidth="491.0" promptText="Enter Semester" />
+                                                            <TextField fx:id="section" prefHeight="37.0" prefWidth="491.0" promptText="Enter Section" />
+                                                            <TextField fx:id="addTotalClasses" prefHeight="30.0" prefWidth="491.0" promptText="Enter Total Number of Classes" />
+                                                            <HBox prefHeight="100.0" prefWidth="200.0">
+                                                               <children>
+                                                                  <AnchorPane fx:id="calendar" prefHeight="52.0" prefWidth="243.0" />
+                                                                  <Label fx:id="label" prefHeight="48.0" prefWidth="238.0" text="  DD/MM/YYYY">
+                                                                     <font>
+                                                                        <Font name="System Bold Italic" size="15.0" />
+                                                                     </font>
+                                                                  </Label>
+                                                               </children>
+                                                            </HBox>
+                                                            <AnchorPane prefHeight="47.0" prefWidth="491.0" />
+                                                         </children>
+                                                      </VBox>
+                                                   </content>
+                                                   <font>
+                                                      <Font name="Times New Roman Bold" size="20.0" />
+                                                   </font>
+                                                </TitledPane>
+                                             </children>
+                                          </VBox>
+                                       </children>
+                                    </AnchorPane>
+                                 </children>
+                              </AnchorPane>
+                           </content>
+                           <font>
+                              <Font name="Times New Roman Bold" size="20.0" />
+                           </font>
+                        </TitledPane>
+                        <TitledPane animated="false" prefHeight="420.0" prefWidth="597.0" text="SAVE ONLINE">
+                           <content>
+                              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="384.0" prefWidth="595.0">
+                                 <children>
+                                    <Button fx:id="savefir" layoutX="-5.0" layoutY="48.0" mnemonicParsing="false" onAction="#SaveFirebaseAttendance" prefHeight="67.0" prefWidth="526.0" styleClass="hover-main" text="Save" />
+                                    <Button fx:id="syncsave" layoutX="-4.0" layoutY="115.0" mnemonicParsing="false" onAction="#LoadFirebaseAttendance" prefHeight="67.0" prefWidth="524.0" styleClass="hover-main" text="Consolidate" />
+                                    <MaterialDesignIconView fill="#6464a5" glyphName="SYNC" layoutX="42.0" layoutY="92.0" size="30" text="" wrappingWidth="37.0" />
+                                    <MaterialDesignIconView fill="#6464a5" glyphName="CLOUD_DOWNLOAD" layoutX="46.0" layoutY="159.0" size="30" text="" />
+                                 </children>
+                              </AnchorPane>
+                           </content>
+                           <font>
+                              <Font name="Times New Roman Bold" size="20.0" />
+                           </font>
+                        </TitledPane>
+                     </children>
+                  </VBox>
+                  <ImageView fitHeight="213.0" fitWidth="477.0" layoutX="1544.0" layoutY="-4.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="file:/C:/Users/Nisha/Desktop/Images/LogoFac.png" />
+                     </image>
+                  </ImageView>
+                  <Label fx:id="in1" layoutX="14.0" layoutY="106.0" prefHeight="919.0" prefWidth="430.0" text="Label" />
+                  <Label alignment="CENTER" contentDisplay="CENTER" layoutX="12.0" prefHeight="105.0" prefWidth="432.0" style="-fx-background-color: #f3e96b;" text="INSTRUCTIONS" textFill="#6464a5">
+                     <font>
+                        <Font name="System Bold" size="32.0" />
+                     </font>
+                  </Label>
+               </children>
+            </AnchorPane>
+         </children>
+      </AnchorPane>
+   </children>
+</AnchorPane>

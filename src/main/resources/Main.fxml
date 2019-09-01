@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="918.0" prefWidth="1308.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.MainController">
+   <children>
+      <AnchorPane fx:id="ap" prefHeight="698.0" prefWidth="1308.0" />
+      <Button fx:id="btn" layoutX="31.0" layoutY="855.0" mnemonicParsing="false" onAction="#newwin" text="Open" />
+      <Button fx:id="btn1" layoutX="185.0" layoutY="855.0" mnemonicParsing="false" onAction="#saveList" text="Save" />
+      <Button fx:id="btn11" layoutX="274.0" layoutY="855.0" mnemonicParsing="false" onAction="#loadSpreadSheet" text="Load" />
+      <Button fx:id="btn111" layoutX="364.0" layoutY="855.0" mnemonicParsing="false" onAction="#importViva" text="VIVA" />
+   </children>
+</AnchorPane>

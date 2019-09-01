@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="648.0" prefWidth="803.0" style="-fx-background-color: #6464a5;" stylesheets="@application.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.MainController">
+   <children>
+      <HBox fx:id="markscia" alignment="CENTER" layoutX="451.0" layoutY="271.0" onMouseClicked="#openMarks" prefHeight="136.0" prefWidth="273.0" spacing="7.0" styleClass="hover-main">
+         <children>
+            <ImageView fitHeight="82.0" fitWidth="76.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="file:/C:/Users/Nisha/Desktop/Images/1072172-200.png" />
+               </image>
+            </ImageView>
+            <Label text="MARKS-CIA">
+               <font>
+                  <Font name="System Bold" size="20.0" />
+               </font>
+            </Label>
+         </children>
+         <effect>
+            <DropShadow />
+         </effect>
+      </HBox>
+      <HBox fx:id="studsetup" alignment="CENTER" layoutX="93.0" layoutY="271.0" onMouseClicked="#openSetup" prefHeight="136.0" prefWidth="273.0" spacing="7.0" styleClass="hover-main">
+         <children>
+            <ImageView fitHeight="82.0" fitWidth="76.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="file:/C:/Users/Nisha/Desktop/Images/1632589-200.png" />
+               </image>
+            </ImageView>
+            <Label text="STUDENT SETUP">
+               <font>
+                  <Font name="System Bold" size="20.0" />
+               </font>
+            </Label>
+         </children>
+         <effect>
+            <DropShadow />
+         </effect>
+      </HBox>
+      <HBox fx:id="at" alignment="CENTER" layoutX="93.0" layoutY="448.0" onMouseClicked="#openAttendance" prefHeight="136.0" prefWidth="273.0" spacing="7.0" styleClass="hover-main">
+         <children>
+            <ImageView fitHeight="82.0" fitWidth="76.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="file:/C:/Users/Nisha/Desktop/Images/125742-200.png" />
+               </image>
+            </ImageView>
+            <Label text="ATTENDANCE">
+               <font>
+                  <Font name="System Bold" size="20.0" />
+               </font>
+            </Label>
+         </children>
+         <effect>
+            <DropShadow />
+         </effect>
+      </HBox>
+      <HBox alignment="CENTER" layoutX="453.0" layoutY="448.0" onMouseClicked="#openLabs" prefHeight="136.0" prefWidth="273.0" spacing="7.0" styleClass="hover-main">
+         <children>
+            <ImageView fitHeight="86.0" fitWidth="81.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="file:/C:/Users/Nisha/Desktop/Images/24026-200.png" />
+               </image>
+            </ImageView>
+            <Label text="LAB ENTRY-CIE">
+               <font>
+                  <Font name="System Bold" size="20.0" />
+               </font>
+            </Label>
+         </children>
+         <effect>
+            <DropShadow />
+         </effect>
+      </HBox>
+      <ImageView fitHeight="163.0" fitWidth="352.0" layoutX="226.0" layoutY="66.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="file:/C:/Users/Nisha/Desktop/Images/LogoFac.png" />
+         </image>
+         <effect>
+            <DropShadow />
+         </effect>
+      </ImageView>
+      <ImageView fx:id="exit" fitHeight="41.0" fitWidth="35.0" layoutX="751.0" layoutY="14.0" onMouseClicked="#screenDestroy" pickOnBounds="true" preserveRatio="true" styleClass="exit">
+         <image>
+            <Image url="file:/C:/Users/Nisha/Desktop/Images/exit.png" />
+         </image>
+      </ImageView>
+   </children>
+</AnchorPane>

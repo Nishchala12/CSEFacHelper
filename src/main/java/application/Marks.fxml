@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import de.jensd.fx.glyphs.materialdesignicons.MaterialDesignIconView?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.TitledPane?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="1228.0" prefWidth="1854.0" style="-fx-background-color: #b3e5fc;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.MarksController">
+   <children>
+      <AnchorPane fx:id="ap_marks" layoutX="-6.0" layoutY="-8.0" prefHeight="1326.0" prefWidth="2094.0" style="-fx-background-color: #6464a5;">
+         <children>
+            <TableView fx:id="table_marks" layoutX="430.0" layoutY="3.0" prefHeight="1203.0" prefWidth="1319.0" />
+            <VBox fx:id="utility_marks" layoutX="1542.0" layoutY="212.0">
+               <children>
+                  <TitledPane animated="false" prefHeight="474.0" prefWidth="558.0" style="-fx-background-color: #40c4ff;" text="SPREADSHEET">
+                     <content>
+                        <AnchorPane minHeight="0.0" minWidth="0.0">
+                           <children>
+                              <AnchorPane layoutX="-1.0">
+                                 <children>
+                                    <VBox>
+                                       <children>
+                                          <Button fx:id="loadmarksbtn" mnemonicParsing="false" onAction="#openMarks" prefHeight="72.0" prefWidth="524.0" styleClass="hover-main" text="Load Spreadsheet">
+                                             <graphic>
+                                                <MaterialDesignIconView fill="#6464a5" glyphName="UPLOAD" size="30" />
+                                             </graphic>
+                                          </Button>
+                                          <TitledPane fx:id="tpma" text="ENTER DETAILS">
+                                             <content>
+                                                <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
+                                                   <children>
+                                                      <TextField fx:id="semester" prefHeight="44.0" prefWidth="491.0" promptText="Enter Semester" />
+                                                      <TextField fx:id="section" prefHeight="42.0" prefWidth="491.0" promptText="Enter Section" />
+                                                      <Button fx:id="marks1" mnemonicParsing="false" onAction="#LoadMarks" text="Done">
+                                                         <font>
+                                                            <Font size="17.0" />
+                                                         </font></Button>
+                                                   </children>
+                                                </VBox>
+                                             </content>
+                                             <font>
+                                                <Font name="Times New Roman Bold" size="20.0" />
+                                             </font>
+                                          </TitledPane>
+                                          <Button fx:id="savemarksbtn" mnemonicParsing="false" onAction="#SaveMarks" prefHeight="71.0" prefWidth="525.0" styleClass="hover-main" text="Save Spreadsheet">
+                                             <graphic>
+                                                <MaterialDesignIconView fill="#6464a5" glyphName="CONTENT_SAVE" size="30" text="" />
+                                             </graphic>
+                                          </Button>
+                                       </children>
+                                    </VBox>
+                                 </children>
+                              </AnchorPane>
+                           </children>
+                        </AnchorPane>
+                     </content>
+                     <font>
+                        <Font name="Times New Roman Bold" size="20.0" />
+                     </font>
+                  </TitledPane>
+                  <TitledPane animated="false" text="SAVE ONLINE">
+                     <content>
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="711.0">
+                           <children>
+                              <Button fx:id="savefiremarksbtn" layoutX="-5.0" layoutY="82.0" mnemonicParsing="false" prefHeight="71.0" prefWidth="449.0" styleClass="hover-main" text="Save" />
+                              <Button fx:id="loadfiremarksbtn" layoutX="-2.0" layoutY="159.0" mnemonicParsing="false" onAction="#MarksCreate" prefHeight="71.0" prefWidth="450.0" styleClass="hover-main" text="Consolidate" />
+                              <MaterialDesignIconView fill="#6464a5" glyphName="CONTENT_SAVE" layoutX="32.0" layoutY="129.0" size="30" />
+                              <MaterialDesignIconView fill="#6464a5" glyphName="CLOUD_DOWNLOAD" layoutX="33.0" layoutY="205.0" size="30" />
+                           </children>
+                        </AnchorPane>
+                     </content>
+                     <font>
+                        <Font name="Times New Roman Bold" size="20.0" />
+                     </font>
+                  </TitledPane>
+               </children>
+            </VBox>
+            <ImageView fitHeight="206.0" fitWidth="477.0" layoutX="1541.0" layoutY="7.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="file:/C:/Users/Nisha/Desktop/Images/logoFac.png" />
+               </image>
+            </ImageView>
+            <Label fx:id="in2" layoutX="7.0" layoutY="114.0" prefHeight="958.0" prefWidth="423.0" text="Label" />
+            <Label alignment="CENTER" contentDisplay="CENTER" layoutX="5.0" layoutY="7.0" prefHeight="105.0" prefWidth="425.0" style="-fx-background-color: #f3e96b;" text="INSTRUCTIONS" textFill="#6464a5">
+               <font>
+                  <Font name="System Bold" size="32.0" />
+               </font>
+            </Label>
+         </children>
+      </AnchorPane>
+   </children>
+</AnchorPane>

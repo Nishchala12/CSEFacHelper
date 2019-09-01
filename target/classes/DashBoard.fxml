@@ -1,0 +1,276 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import de.jensd.fx.glyphs.materialdesignicons.MaterialDesignIconView?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.TitledPane?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.DashBoardController">
+   <children>
+      <HBox layoutY="32.0">
+         <children>
+            <VBox fx:id="vbox_nav" prefHeight="881.0" prefWidth="319.0" style="-fx-background-color: #018786;">
+               <children>
+                  <Button fx:id="at" mnemonicParsing="false" onAction="#attendanceShow" prefHeight="92.0" prefWidth="319.0" style="-fx-background-color: #0000FF.;" text="ATTENDANCE">
+                     <font>
+                        <Font name="System Bold" size="22.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="mark_nav" layoutX="10.0" layoutY="44.0" mnemonicParsing="false" onAction="#marksShow" prefHeight="88.0" prefWidth="319.0" style="-fx-background-color: #0000FF.;" text="MARKS">
+                     <font>
+                        <Font name="System Bold" size="22.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="qa" layoutX="10.0" layoutY="44.0" mnemonicParsing="false" onAction="#newwin" prefHeight="92.0" prefWidth="319.0" style="-fx-background-color: #0000FF.;" text="LAB ENTRY">
+                     <font>
+                        <Font name="System Bold" size="22.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="studset" mnemonicParsing="false" onAction="#open_stud" prefHeight="84.0" prefWidth="319.0" style="-fx-background-color: #0000FF.;" text="STUDENT SETUP">
+                     <font>
+                        <Font name="System Bold" size="22.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets top="100.0" />
+                     </VBox.margin>
+                  </Button>
+               </children>
+            </VBox>
+            <AnchorPane prefHeight="200.0" prefWidth="200.0">
+               <children>
+                  <AnchorPane fx:id="ap_lab" prefHeight="884.0" prefWidth="1314.0">
+                     <children>
+                        <HBox>
+                           <children>
+                              <AnchorPane fx:id="ap" prefHeight="882.0" prefWidth="967.0" />
+                              <VBox fx:id="utility_lab" prefHeight="882.0" prefWidth="266.0" style="-fx-background-color: #018786;">
+                                 <children>
+                                    <TitledPane animated="false" prefHeight="146.0" prefWidth="256.0" style="-fx-background-color: #018786;" text="SPREADSHEET">
+                                       <content>
+                                          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="112.0" prefWidth="245.0" style="-fx-background-color: #018786;">
+                                             <children>
+                                                <Button fx:id="loadlab" layoutX="-2.0" mnemonicParsing="false" onAction="#loadSpreadSheet" prefHeight="50.0" prefWidth="259.0" text="Load Spreadsheet">
+                                                   <font>
+                                                      <Font name="Lucida Fax Regular" size="15.0" />
+                                                   </font>
+                                                </Button>
+                                                <Button fx:id="savelab" layoutX="-5.0" layoutY="50.0" mnemonicParsing="false" onAction="#saveList" prefHeight="49.0" prefWidth="258.0" text="Save Spreadsheet">
+                                                   <font>
+                                                      <Font name="Lucida Fax Regular" size="15.0" />
+                                                   </font>
+                                                </Button>
+                                                <MaterialDesignIconView fill="#00d6ed" glyphName="UPLOAD" layoutX="12.0" layoutY="36.0" size="30" />
+                                                <MaterialDesignIconView fill="#00d6ed" glyphName="CONTENT_SAVE" layoutX="13.0" layoutY="83.0" size="30" />
+                                             </children>
+                                          </AnchorPane>
+                                       </content>
+                                       <font>
+                                          <Font name="Times New Roman Bold" size="20.0" />
+                                       </font>
+                                    </TitledPane>
+                                    <TitledPane animated="false" prefHeight="146.0" prefWidth="256.0" style="-fx-background-color: #018786;" text="VIVA">
+                                       <content>
+                                          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="63.0" prefWidth="264.0" style="-fx-background-color: #018786;">
+                                             <children>
+                                                <Button fx:id="importMoodle" layoutX="-2.0" mnemonicParsing="false" onAction="#importViva" prefHeight="54.0" prefWidth="259.0" text="Import Moodle Viva">
+                                                   <font>
+                                                      <Font name="Lucida Fax Regular" size="15.0" />
+                                                   </font>
+                                                </Button>
+                                                <MaterialDesignIconView fill="#00d6ed" glyphName="UPLOAD" layoutX="19.0" layoutY="38.0" size="30" />
+                                             </children>
+                                          </AnchorPane>
+                                       </content>
+                                       <font>
+                                          <Font name="Times New Roman Bold" size="20.0" />
+                                       </font>
+                                    </TitledPane>
+                                    <TitledPane animated="false" minHeight="0.0" minWidth="0.0" prefHeight="164.0" prefWidth="266.0" text="SAVE ONLINE">
+                                       <content>
+                                          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="116.0" prefWidth="245.0" style="-fx-background-color: #018786;">
+                                             <children>
+                                                <Button fx:id="saveFirLab" layoutY="-1.0" mnemonicParsing="false" prefHeight="48.0" prefWidth="258.0" text="Save" textAlignment="RIGHT">
+                                                   <font>
+                                                      <Font name="Lucida Fax Regular" size="15.0" />
+                                                   </font>
+                                                </Button>
+                                                <Button fx:id="loadFirLab" layoutY="49.0" mnemonicParsing="false" prefHeight="51.0" prefWidth="258.0" text="Sync">
+                                                   <font>
+                                                      <Font name="Lucida Fax Regular" size="15.0" />
+                                                   </font>
+                                                </Button>
+                                                <MaterialDesignIconView fill="#00d6ed" glyphName="SYNC" layoutX="29.0" layoutY="33.0" size="30" />
+                                                <MaterialDesignIconView fill="#00d6ed" glyphName="CLOUD_DOWNLOAD" layoutX="29.0" layoutY="86.0" size="30" text="" />
+                                             </children>
+                                          </AnchorPane>
+                                       </content>
+                                       <font>
+                                          <Font name="Times New Roman Bold" size="20.0" />
+                                       </font>
+                                    </TitledPane>
+                                 </children>
+                              </VBox>
+                           </children>
+                        </HBox>
+                     </children>
+                  </AnchorPane>
+                  <AnchorPane fx:id="ap_marks" prefHeight="884.0" prefWidth="1314.0">
+                     <children>
+                        <HBox>
+                           <children>
+                              <TableView fx:id="table_marks" prefHeight="884.0" prefWidth="967.0" />
+                              <VBox fx:id="utility_marks" prefHeight="882.0" prefWidth="351.0" style="-fx-background-color: #018786;">
+                                 <children>
+                                    <TitledPane animated="false" prefHeight="146.0" prefWidth="256.0" style="-fx-background-color: #018786;" text="SPREADSHEET">
+                                       <content>
+                                          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="112.0" prefWidth="245.0" style="-fx-background-color: #018786;">
+                                             <children>
+                                                <Button fx:id="loadmarksbtn" layoutX="-2.0" mnemonicParsing="false" onAction="#LoadMarks" prefHeight="35.0" prefWidth="268.0" text="Load Spreadsheet">
+                                                   <font>
+                                                      <Font name="Lucida Fax Regular" size="15.0" />
+                                                   </font>
+                                                </Button>
+                                                <Button fx:id="savemarksbtn" layoutX="-6.0" layoutY="42.0" mnemonicParsing="false" onAction="#SaveMarks" prefHeight="35.0" prefWidth="279.0" text="Save Spreadsheet">
+                                                   <font>
+                                                      <Font name="Lucida Fax Regular" size="15.0" />
+                                                   </font>
+                                                </Button>
+                                                <MaterialDesignIconView fill="#00d6ed" glyphName="UPLOAD" layoutX="14.0" layoutY="28.0" size="30" />
+                                                <MaterialDesignIconView fill="#00d6ed" glyphName="CONTENT_SAVE" layoutX="14.0" layoutY="72.0" size="30" />
+                                             </children>
+                                          </AnchorPane>
+                                       </content>
+                                       <font>
+                                          <Font name="Times New Roman Bold" size="20.0" />
+                                       </font>
+                                    </TitledPane>
+                                    <TitledPane animated="false" minHeight="0.0" minWidth="0.0" prefHeight="152.0" prefWidth="266.0" text="SAVE ONLINE">
+                                       <content>
+                                          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="116.0" prefWidth="245.0" style="-fx-background-color: #018786;">
+                                             <children>
+                                                <Button fx:id="savefiremarksbtn" layoutY="-1.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="267.0" text="Save" textAlignment="RIGHT">
+                                                   <font>
+                                                      <Font name="Lucida Fax Regular" size="15.0" />
+                                                   </font>
+                                                </Button>
+                                                <Button fx:id="loadfiremarksbtn" layoutX="-3.0" layoutY="40.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="272.0" text="Sync">
+                                                   <font>
+                                                      <Font name="Lucida Fax Regular" size="15.0" />
+                                                   </font>
+                                                </Button>
+                                                <MaterialDesignIconView fill="#00d6ed" glyphName="SYNC" layoutX="25.0" layoutY="27.0" size="30" />
+                                                <MaterialDesignIconView fill="#00d6ed" glyphName="CLOUD_DOWNLOAD" layoutX="26.0" layoutY="71.0" size="30" />
+                                             </children>
+                                          </AnchorPane>
+                                       </content>
+                                       <font>
+                                          <Font name="Times New Roman Bold" size="20.0" />
+                                       </font>
+                                    </TitledPane>
+                                 </children>
+                              </VBox>
+                           </children>
+                        </HBox>
+                     </children>
+                  </AnchorPane>
+                  <AnchorPane fx:id="ap_attendance">
+                     <children>
+                        <HBox>
+                           <children>
+                              <TableView fx:id="table" prefHeight="882.0" prefWidth="968.0" />
+                              <VBox fx:id="utility_attend" prefHeight="882.0" prefWidth="266.0" style="-fx-background-color: #018786;">
+                                 <children>
+                                    <TitledPane animated="false" prefHeight="146.0" prefWidth="256.0" style="-fx-background-color: #018786;" text="CHOOSE DATE">
+                                       <content>
+                                          <AnchorPane fx:id="ap_calendar" minHeight="0.0" minWidth="0.0" prefHeight="112.0" prefWidth="245.0" style="-fx-background-color: #018786;" />
+                                       </content>
+                                       <font>
+                                          <Font name="Times New Roman Bold" size="20.0" />
+                                       </font>
+                                    </TitledPane>
+                                    <TitledPane animated="false" prefHeight="146.0" prefWidth="256.0" style="-fx-background-color: #018786;" text="SPREADSHEET">
+                                       <content>
+                                          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="92.0" prefWidth="344.0" style="-fx-background-color: #018786;">
+                                             <children>
+                                                <Button fx:id="loadspbtn" layoutX="-2.0" mnemonicParsing="false" onAction="#loadAttendance" prefHeight="47.0" prefWidth="267.0" style="-fx-background-color: #0000FF.;" text="Load Spreadsheet">
+                                                   <font>
+                                                      <Font name="System Bold Italic" size="18.0" />
+                                                   </font>
+                                                </Button>
+                                                <Button fx:id="savespbtn" layoutX="-2.0" layoutY="47.0" mnemonicParsing="false" onAction="#saveAttendance" prefHeight="49.0" prefWidth="267.0" text="Save Spreadsheet">
+                                                   <font>
+                                                      <Font name="System Bold Italic" size="18.0" />
+                                                   </font>
+                                                </Button>
+                                                <MaterialDesignIconView fill="#00d6ed" glyphName="UPLOAD" layoutX="14.0" layoutY="34.0" size="30" />
+                                                <MaterialDesignIconView fill="#00d6ed" glyphName="CONTENT_SAVE" layoutX="14.0" layoutY="84.0" size="30" text="" />
+                                             </children>
+                                          </AnchorPane>
+                                       </content>
+                                       <font>
+                                          <Font name="Times New Roman Bold" size="20.0" />
+                                       </font>
+                                    </TitledPane>
+                                    <TitledPane animated="false" prefHeight="146.0" prefWidth="256.0" style="-fx-background-color: #018786;" text="TOTAL NUMBER OF CLASSES">
+                                       <content>
+                                          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="112.0" prefWidth="245.0" style="-fx-background-color: #018786;">
+                                             <children>
+                                                <TextField fx:id="addTotalClasses" layoutX="-3.0" layoutY="24.0" prefHeight="54.0" prefWidth="279.0" />
+                                             </children>
+                                          </AnchorPane>
+                                       </content>
+                                       <font>
+                                          <Font name="Times New Roman Bold" size="20.0" />
+                                       </font>
+                                    </TitledPane>
+                                    <TitledPane animated="false" minHeight="0.0" minWidth="0.0" prefHeight="179.0" prefWidth="346.0" text="SAVE ONLINE">
+                                       <content>
+                                          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="93.0" prefWidth="344.0" style="-fx-background-color: #018786;">
+                                             <children>
+                                                <Button fx:id="savefir" layoutY="-1.0" mnemonicParsing="false" onAction="#SaveFirebaseAttendance" prefHeight="49.0" prefWidth="266.0" text="Save" textAlignment="RIGHT">
+                                                   <font>
+                                                      <Font name="System Bold Italic" size="18.0" />
+                                                   </font>
+                                                </Button>
+                                                <Button fx:id="syncsave" layoutY="48.0" mnemonicParsing="false" onAction="#LoadFirebaseAttendance" prefHeight="53.0" prefWidth="266.0" text="Consolidate">
+                                                   <font>
+                                                      <Font name="System Bold Italic" size="18.0" />
+                                                   </font>
+                                                </Button>
+                                                <MaterialDesignIconView fill="#00d6ed" glyphName="SYNC" layoutX="25.0" layoutY="36.0" size="30" text="" />
+                                                <MaterialDesignIconView fill="#00d6ed" glyphName="CLOUD_DOWNLOAD" layoutX="25.0" layoutY="87.0" size="30" text="" />
+                                             </children>
+                                          </AnchorPane>
+                                       </content>
+                                       <font>
+                                          <Font name="Times New Roman Bold" size="20.0" />
+                                       </font>
+                                    </TitledPane>
+                                 </children>
+                              </VBox>
+                           </children>
+                        </HBox>
+                     </children>
+                  </AnchorPane>
+               </children>
+            </AnchorPane>
+         </children>
+      </HBox>
+      <AnchorPane fx:id="header" prefHeight="31.0" prefWidth="1553.0" style="-fx-background-color: #01579B;">
+         <children>
+            <Text layoutX="20.0" layoutY="21.0" strokeType="OUTSIDE" strokeWidth="0.0" text="STUDENT DBMS" wrappingWidth="173.3662109375">
+               <font>
+                  <Font name="Century" size="18.0" />
+               </font>
+            </Text>
+         </children>
+      </AnchorPane>
+   </children>
+</AnchorPane>
