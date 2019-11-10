@@ -87,7 +87,7 @@ public class Controller {
 
 
         USNCol = new TableColumn("USN");
-       USNCol.setMinWidth(100);
+       USNCol.setMinWidth(200);
        USNCol.setCellValueFactory(
            new PropertyValueFactory<Person, String>("USN"));
        USNCol.setCellFactory(TextFieldTableCell.forTableColumn());
@@ -104,7 +104,7 @@ public class Controller {
 
 
         NameCol = new TableColumn("Name");
-       NameCol.setMinWidth(100);
+       NameCol.setMinWidth(250);
        NameCol.setCellValueFactory(
            new PropertyValueFactory<Person, String>("name"));
        NameCol.setCellFactory(TextFieldTableCell.forTableColumn());
@@ -165,6 +165,7 @@ public class Controller {
 	String usn = sheet.getRow(i).getCell(0).toString();
 	String name = sheet.getRow(i).getCell(1).toString();
 	System.out.println(usn + name);
+	if(!usn.equals(""))
 	data.add(new Person(usn,name));
 		
 	}
@@ -183,7 +184,7 @@ public class Controller {
           		new ValueEventListener() {
 	              public void onDataChange(DataSnapshot d) {
 	            	  if(d.hasChild(output))
-	            		  cname.setText(d.child(output).getValue().toString());
+	            		  cname.setText(d.child(output).getValue().toString().trim());
 	            	  else
 	            		  cname.setText("");
 	                  latch1.countDown();
@@ -219,7 +220,7 @@ public class Controller {
 	        	 child_name.setValueAsync(cnamestr);
 	        	 latch1.countDown();
 	        	 
-	        	System.out.println("Succesfull");
+	        	System.out.println("Successful");
 	        	 
 	        	latch1.await();
 	    	} 

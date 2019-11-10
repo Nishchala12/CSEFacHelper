@@ -13,7 +13,10 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.concurrent.CountDownLatch;
 
@@ -71,10 +74,13 @@ import javafx.scene.Node;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Dialog;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
+import javafx.scene.control.ScrollBar;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -91,6 +97,7 @@ import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.FileChooser;
@@ -146,6 +153,8 @@ public class Attendance
 
 	@FXML
 	TitledPane tpatt;
+	@FXML
+	StackPane stack = new StackPane();
 
 	@FXML
 	ListView<String> list=new ListView<String>();
@@ -190,6 +199,14 @@ public class Attendance
 	    @FXML
 		Button savespbtn,loadspbtn, savefir, syncsave;
 	    
+	    @FXML
+	    ComboBox drop = new ComboBox();
+	    
+	    Map<String, List<String>> subjects = new HashMap<String, List<String>>();
+	    //This is one instance of the  map you want to store in the above list.
+
+	    
+	    String output="";
 	    public void initialize() throws IOException
 		{		
 	    	tpatt.setExpanded(true);
@@ -268,25 +285,96 @@ public class Attendance
 		    	list.setVisible(false);
 		    	list.setItems(abc);
 		    	
-		    
-		    	/*table.setRowFactory(tv -> new TableRow<Person>() {
+		    	semester.textProperty().addListener((observable, oldValue, newValue) -> {
+		    	    dropDown(newValue);
+		    	});
+		    	
+		    	
+		    	
+		    	table.setRowFactory(tv -> new TableRow<Person>() {
 		    	    @Override
 		    	    protected void updateItem(Person item, boolean empty) {
 		    	        super.updateItem(item, empty);
-		    	       
-		    	        if (item != null || !(item.getClasses().equals("")))
-		    	        { int var=Integer.parseInt(item.getClasses());
+		    	        //System.out.println("**"+item.getName()+"**");
+		    	        if (item == null || item.getName() == null)
 		    	            setStyle("");
-		    	         if (var <= 75)
-		    	            setStyle("-fx-background-color: #baffba;");
-		    	        else if (var <= 85)
-		    	            setStyle("-fx-background-color: #ffd7d1;");
+		    	        else if (!item.getPer().equals(""))
+		    	        {
+		    	        	if(!item.getPer().equals("-")) {
+		    	        	if((Integer.parseInt(item.getPer().toString())<75))
+		    	        	{
+		    	        		setStyle("-fx-background-color: #DA6147;");
+		    	        	}
+		    	        	else if((Integer.parseInt(item.getPer().toString())>75) && (Integer.parseInt(item.getPer().toString())<85))
+		    	        	{
+		    	        		setStyle("-fx-background-color: #F8E243;");
+		    	        	}
+		    	        	else
+		    	        	{
+		    	        		setStyle("-fx-background-color: #75C00E;");	
+		    	        	}
+		    	        } 
+		    	        	else
+			    	        {
+			    	        	  setStyle("-fx-background-color: #D3D3D3;");
+			    	        }
+		    	        	
+		    	        	}
 		    	        else
-		    	            setStyle("");
-		    	    }}
-		    	});*/
-
+		    	        {
+		    	        	  setStyle("-fx-background-color: #D3D3D3;");
+		    	        }
+		    	          
+		    	    }
+		    	});
+		    
+		    	loadSubjects();
 		       }
+	    
+	    public void loadSubjects()
+	    {
+	    	 try {
+		            final CountDownLatch latch1 = new CountDownLatch(1);
+		            DatabaseReference ref= FirebaseDatabase.getInstance().getReference().child("Subjects/");
+
+
+		             ref.addListenerForSingleValueEvent(
+		          		new ValueEventListener() {
+			              public void onDataChange(DataSnapshot d) {
+			            	  
+			            	  
+			            	  
+			                  for(DataSnapshot ds : d.getChildren()) {
+			                	  //ArrayList<String> names= new ArrayList<>();
+			                      String name = ds.getValue(String.class).trim();
+			                      List<String> items = Arrays.asList(name.split(","));
+			                      for(int i=0;i<items.size();i++)
+			                    	  items.get(i).trim();
+			                      subjects.put(ds.getKey().toString().trim(), items);
+			 
+			                  }
+			            		  //ObservableList<String> options = 
+			            		    //   	    FXCollections.observableArrayList(d.child(output).getValue().toString());
+			            		  System.out.println("----------------"+subjects.toString());
+			            		// String ar[] = d.child(output).getValue().toString().split(",");
+			            		// drop.getItems().addAll(options);
+			            		 // cname.setText(d.child(output).getValue().toString());
+			            	  
+			                  latch1.countDown();
+			            	  
+			   				}
+			
+			  			  public void onCancelled(DatabaseError error) {
+			  			      latch1.countDown();
+			  			        		  
+			  			  }
+		  			  });
+		  			  latch1.await();
+		   			} 
+		   			catch (InterruptedException en) {
+		  				en.printStackTrace();
+		  			}
+	    }
 	    
 	    public void openDetails(ActionEvent e)
 	    {
@@ -304,23 +392,31 @@ public class Attendance
 	    
 	    public void SaveFirebaseAttendance(ActionEvent e) throws IOException
 		{
-	    	coursecode=subject.getText().toString().toUpperCase();
+	    	coursecode=drop.getSelectionModel().getSelectedItem().toString().trim();
 			int tc = Integer.parseInt(addTotalClasses.getText().toString());
 
 	   	 ArrayList<String> attend = new ArrayList<>();
 	   	 ArrayList<String> percent = new ArrayList<>();
-			
+	   	 
 			for(Person dsce: data)
 			{
 				if(!dsce.getClasses().equals(""))
 				{
-				attend.add(dsce.getClasses().toString());
-				Double percentage = Double.parseDouble((dsce.getClasses().toString()))/tc;
-				percentage= percentage * 100;
+					attend.add(dsce.getClasses().toString());
 				
-				int perc = (int) Math.round(percentage);
-				
-				 percent.add(perc+"");
+					if(dsce.getClasses().equals("-"))
+					{
+						percent.add("-");
+					}
+					else
+					{
+						Double percentage = Double.parseDouble((dsce.getClasses().toString()))/tc;
+						percentage= percentage * 100;
+						
+						int perc = (int) Math.round(percentage);
+						
+						 percent.add(perc+"");
+					}
 				}
 				
 				
@@ -353,6 +449,8 @@ public class Attendance
 		        	 child_name.setValueAsync(perc);
 		        	 child_name=ref.child("sub");
 		        	 child_name.setValueAsync(coursecode);
+		        	 child_name=ref.child("totalClasses");
+		        	 child_name.setValueAsync(tc+"");
 		        	 latch1.countDown();
 		        	 
 		        	System.out.println("Succesfull");
@@ -368,10 +466,24 @@ public class Attendance
 	        alerts.setContentText("Saved Online!");
 	        alerts.showAndWait();
 	        return;
+	        
 				
 		}
 		
-		
+		public void dropDown(String sem)
+		{
+			if(subjects.containsKey(sem))
+			{
+			ObservableList<String> options = 
+		       	    FXCollections.observableArrayList(subjects.get(sem));
+		       		drop.getItems().clear();
+			        drop.getItems().addAll(options);
+			}
+			else
+			{
+				drop.getItems().clear();
+			}
+		}
 		
 		
 		public void LoadFirebaseAttendance(ActionEvent e) throws IOException
@@ -379,7 +491,7 @@ public class Attendance
 			TextInputDialog dialog = new TextInputDialog("Enter here");
 			 
 			dialog.setTitle("Set Session");
-		dialog.setHeaderText("Enter duration ('Mon1 Year1 - Mon2 Year2'):");
+		dialog.setHeaderText("Enter duration ('Date 1 - Date 2'):");
 				dialog.setContentText("Duration:");
 				 
 				Optional<String> result = dialog.showAndWait();
@@ -388,7 +500,8 @@ public class Attendance
 					dur = name;
 				});
 				
-				
+				 tfsem = semester.getText().toString();
+				 tfsec = section.getText().toString().toUpperCase();
 
 		     ArrayList<DataSnapshot> Userlist = new ArrayList<DataSnapshot>();
 
@@ -448,10 +561,15 @@ public class Attendance
 		      		smol = new ArrayList<String>();
 		      		smol.addAll(Arrays.asList(fir.getPerc().split(",")));
 		      		big.add(smol);
+		      		
+		      		//smol = new ArrayList<String>();
+		      		//smol.add(fir.getTotalClasses());
+		      		//big.add(smol);
+		      		//one sec
 		      	}
 		    	
 		      	System.out.println(big);
-		      	combine(big);
+		      	combine(big, tfsem, tfsec);
 		      	 Alert alerts=new Alert(AlertType.INFORMATION);
 			        alerts.setTitle("Information Dialog");
 			        alerts.setHeaderText(null);
@@ -485,7 +603,7 @@ public class Attendance
 		        alerts.showAndWait();
 		        return;
 	    	}
-	    	  String sub=subject.getText().toString().toUpperCase();
+	    	  String sub=drop.getSelectionModel().getSelectedItem().toString().toUpperCase().trim();
 		        System.out.println(sub);
 		        String finalDate="";
 				LocalDate date = datePicker1.getValue();
@@ -526,11 +644,20 @@ public class Attendance
 	        int i=5;
 	        for(Person dsce: data)
 			{
-				if(!dsce.getClasses().equals(""))
+				if(!dsce.getClasses().equals("") && !dsce.getUsn().equals("") )
 				{
-					System.out.println(spreadsheet.getRow(i).getCell(0).getStringCellValue());
+					//System.out.println(spreadsheet.getRow(i).getCell(0).getStringCellValue());
 					spreadsheet.getRow(i).createCell(2).setCellValue(dsce.getClasses());
 				System.out.println(dsce.getClasses());
+				
+				if(dsce.getClasses().equals("-"))
+				{
+					spreadsheet.getRow(i).createCell(3).setCellValue("-");
+					i++;
+					continue;
+				}
+				else
+				{
 				Double percentage = Double.parseDouble((dsce.getClasses().toString()))/tc;
 				percentage= percentage *100;
 				
@@ -538,13 +665,13 @@ public class Attendance
 				
 				spreadsheet.getRow(i).createCell(3).setCellValue(perc+"");
 				}
-				i++;
 				
+				}i++;
 			}
 	        
 	      
 	        
-	        String directoryName=rootpath+studdat.get(0)+studdat.get(1)+"-"+sub;
+	        String directoryName=rootpath+tfsem+tfsec+"-"+sub;
 	        File directory = new File(directoryName);
 	        System.out.println(directoryName);
 	        if (! directory.exists()){
@@ -601,6 +728,7 @@ public class Attendance
 			      }
 			    }*/
 			 
+			 
 			
 	        Alert alert=new Alert(AlertType.INFORMATION);
 	        alert.setTitle("Information Dialog");
@@ -639,7 +767,7 @@ public class Attendance
 	    tfsec = tfsec.toUpperCase();
 	    studdat.add(tfsem);
 	    studdat.add(tfsec);
-	    String sub=subject.getText().toString();
+	   // String sub=drop.getSelectionModel().getSelectedItem().toString().trim();
 	    LocalDate date=datePicker1.getValue();
 	    String a=addTotalClasses.getText();
 	    int tc=1;
@@ -650,16 +778,16 @@ public class Attendance
     		Alert alerts=new Alert(AlertType.WARNING);
 	        alerts.setTitle("Warning Dialog");
 	        alerts.setHeaderText(null);
-	        alerts.setContentText("Kindly enter all the text fields!");
+	        alerts.setContentText("Kindly enter all the fields!");
 	        alerts.showAndWait();
 	        return;
     	}
-	    if(tfsem.equals("")||tfsec.equals("")||date==null||sub.equals(""))
+	    if(tfsem.equals("")||tfsec.equals("")||date==null)
 		{
 			Alert alerts=new Alert(AlertType.WARNING);
 	        alerts.setTitle("Warning Dialog");
 	        alerts.setHeaderText(null);
-	        alerts.setContentText("Kindly enter all the text fields!");
+	        alerts.setContentText("Kindly enter all the fields!");
 	        alerts.showAndWait();
 	        return;
 	        }
@@ -667,7 +795,16 @@ public class Attendance
 		table.getColumns().addAll(usnCol1, nameCol1, classesCol, perCol);
 		table.setItems(data);
 		
-		
+		String sub=drop.getSelectionModel().getSelectedItem().toString().trim();
+		if(drop == null)
+		{
+			Alert alerts=new Alert(AlertType.WARNING);
+	        alerts.setTitle("Warning Dialog");
+	        alerts.setHeaderText(null);
+	        alerts.setContentText("Kindly select a subject!");
+	        alerts.showAndWait();
+	        return;
+		}
 		
 	    
 		
@@ -688,9 +825,9 @@ public class Attendance
 	         finalDate = formatter.format(conv_date);
 	         finalDate = finalDate.replace('/', '-');
 	        }
-			if (Files.exists(Paths.get("C:\\Users\\"+System.getProperty("user.name")+"\\Documents\\SDM\\Attendance\\"+studdat.get(0)+studdat.get(1)+"-"+subject.getText().toString().toUpperCase()))) {
-				if (Files.exists(Paths.get("C:\\Users\\"+System.getProperty("user.name")+"\\Documents\\SDM\\Attendance\\"+studdat.get(0)+studdat.get(1)+"-"+subject.getText().toString().toUpperCase()+"\\"+finalDate.toString()+".xls"))) {
-					ExcelFileToRead = new FileInputStream("C:\\Users\\"+System.getProperty("user.name")+"\\Documents\\SDM\\Attendance\\"+studdat.get(0)+studdat.get(1)+"-"+subject.getText().toString().toUpperCase()+"\\"+finalDate.toString()+".xls");
+			if (Files.exists(Paths.get("C:\\Users\\"+System.getProperty("user.name")+"\\Documents\\SDM\\Attendance\\"+studdat.get(0)+studdat.get(1)+"-"+drop.getSelectionModel().getSelectedItem().toString().toUpperCase().trim()))) {
+				if (Files.exists(Paths.get("C:\\Users\\"+System.getProperty("user.name")+"\\Documents\\SDM\\Attendance\\"+studdat.get(0)+studdat.get(1)+"-"+drop.getSelectionModel().getSelectedItem().toString().toUpperCase().trim()+"\\"+finalDate.toString()+".xls"))) {
+					ExcelFileToRead = new FileInputStream("C:\\Users\\"+System.getProperty("user.name")+"\\Documents\\SDM\\Attendance\\"+studdat.get(0)+studdat.get(1)+"-"+drop.getSelectionModel().getSelectedItem().toString().toUpperCase().trim()+"\\"+finalDate.toString()+".xls");
 					wb = new HSSFWorkbook(ExcelFileToRead);
 					sheet = wb.getSheetAt(0);
 			    }
@@ -720,6 +857,7 @@ public class Attendance
 	
 	public void importAttendanceFile(ActionEvent e) throws IOException
 	{
+		System.out.println("ASDFGHJ");
 		semester.setVisible(true);
     	batch.setVisible(true);
     	section.setVisible(true);
@@ -738,14 +876,27 @@ public class Attendance
 	    tfsec = tfsec.toUpperCase();
 	    studdat.add(tfsem);
 	    studdat.add(tfsec);
-	    String sub=subject.getText().toString();
+	    String a=addTotalClasses.getText();
+	    int tc=1;
+	    if(!a.equals(""))
+    		tc=Integer.parseInt(a);
+    	else
+    	{
+    		Alert alerts=new Alert(AlertType.WARNING);
+	        alerts.setTitle("Warning Dialog");
+	        alerts.setHeaderText(null);
+	        alerts.setContentText("Kindly enter all the fields!");
+	        alerts.showAndWait();
+	        return;
+    	}
+	    
 	    LocalDate date=datePicker1.getValue();
-	    if(tfsem.equals("")||tfsec.equals(""))
+	    if(tfsem.equals("")||tfsec.equals("")||date==null)
 		{
 			Alert alerts=new Alert(AlertType.WARNING);
 	        alerts.setTitle("Warning Dialog");
 	        alerts.setHeaderText(null);
-	        alerts.setContentText("Kindly enter all the text fields!");
+	        alerts.setContentText("Kindly enter all the fields!");
 	        alerts.showAndWait();
 	        return;
 	        }
@@ -753,50 +904,91 @@ public class Attendance
 		table.getColumns().addAll(usnCol1, nameCol1, classesCol, perCol);
 		table.setItems(data);
 		
-		
-		
-	    
-		
+		String sub=drop.getSelectionModel().getSelectedItem().toString().trim();
+		if(drop==null)
+		{
+			Alert alerts=new Alert(AlertType.WARNING);
+	        alerts.setTitle("Warning Dialog");
+	        alerts.setHeaderText(null);
+	        alerts.setContentText("Kindly select a subject!");
+	        alerts.showAndWait();
+	        return;
+		}
 		data.clear();
 		table.setItems(data);
 		
 		String[] sheetrows ;
-			
+		
 		FileChooser fileChooser = new FileChooser();
 		File file = fileChooser.showOpenDialog(null);
 		
 		String str = file.getAbsolutePath().toString();
 		
+		System.out.println("asjdakdasujfba");
+		
 		InputStream ExcelFileToRead = new FileInputStream(str);
 		
 			//InputStream ExcelFileToRead = new FileInputStream("C:\\Users\\"+System.getProperty("user.name")+"\\Documents\\SDM\\Attendance\\"+studdat.get(0)+studdat.get(1)+".xls");
-			HSSFWorkbook  wb = new HSSFWorkbook(ExcelFileToRead);
-			HSSFSheet sheet = wb.getSheetAt(0);
-			
-			
-			HSSFRow row; 
-			HSSFCell cell;
+		HSSFWorkbook  wb = new HSSFWorkbook(ExcelFileToRead);
+		HSSFSheet sheet = wb.getSheetAt(0);
+		
+		
+		HSSFRow row; 
+		HSSFCell cell;
 
-			Iterator rows = sheet.rowIterator();
-			
-			sheetrows = new String[4];
-			
-			int k =2;
-			System.out.println(sheet.getPhysicalNumberOfRows());
+		Iterator rows = sheet.rowIterator();
+		
+		sheetrows = new String[4];
+		
+		int k =2;
+		System.out.println(sheet.getPhysicalNumberOfRows());
 			while(k<sheet.getPhysicalNumberOfRows())
 			{
-				int perc = (int)sheet.getRow(k).getCell(2).getNumericCellValue()/Integer.parseInt(addTotalClasses.getText().toString()) * 100;
-				data.add(new Person(sheet.getRow(k).getCell(0).getStringCellValue(),
-						sheet.getRow(k).getCell(1).getStringCellValue(),
-						String.valueOf((int)sheet.getRow(k).getCell(2).getNumericCellValue()),
-						""));
+				//System.out.println("-----huhuhu");
+				if(sheet.getRow(k).getCell(0).getStringCellValue().equals(""))
+				{
+					k++;
+					continue;
+				}
+				
+				//System.out.println("ssss"+sheet.getRow(k).getCell(2).getStringCellValue()+"mmm");
+				
+				try
+				{
+				if(sheet.getRow(k).getCell(2).getStringCellValue().equals(""))
+				{
+					data.add(new Person(sheet.getRow(k).getCell(0).getStringCellValue(),
+							sheet.getRow(k).getCell(1).getStringCellValue(),
+							"-",
+							""));
+				}
+				}
+				catch(Exception ee)
+				{
+					try
+					{
+					data.add(new Person(sheet.getRow(k).getCell(0).getStringCellValue(),
+							sheet.getRow(k).getCell(1).getStringCellValue(),
+							String.valueOf((int)sheet.getRow(k).getCell(2).getNumericCellValue()),
+							""));
+					}
+					catch(NullPointerException ne)
+					{
+						data.add(new Person(sheet.getRow(k).getCell(0).getStringCellValue(),
+								sheet.getRow(k).getCell(1).getStringCellValue(),
+								"-",
+								""));
+					}
+				}
+				//int perc = (int)sheet.getRow(k).getCell(2).getNumericCellValue()/Integer.parseInt(addTotalClasses.getText().toString()) * 100;
+				
 				//System.out.println(sheet.getRow(k).getCell(2).getStringCellValue());
 				k++;
 			}
 			table.setItems(data);
 	}
 
-	public void combine( ArrayList<ArrayList<String>> big) throws IOException
+	public void combine( ArrayList<ArrayList<String>> big, String sem, String sec) throws IOException
 	{
 		 String directoryName=rootpath+"Consolidated";
 	     File directory = new File(directoryName);
@@ -804,7 +996,7 @@ public class Attendance
 	     if (! directory.exists()){
 	         directory.mkdir();
 	        }
-	     String directoryName1=rootpath+"Consolidated\\"+studdat.get(0)+studdat.get(1);
+	     String directoryName1=rootpath+"Consolidated\\"+sem+sec;
 	     File directory1 = new File(directoryName1);
 	    // System.out.println(directoryName);
 	     if (! directory1.exists()){
@@ -869,7 +1061,7 @@ public class Attendance
 	      
 	      XWPFRun paragraphTwoRunOne = paragraph1.createRun();
 	      paragraphTwoRunOne.setBold(true);
-	      paragraphTwoRunOne.setText("Class: "+tfsem+tfsec+"                                                                                              Cumulative Attendance Record: "+finalDate);
+	      paragraphTwoRunOne.setText("Class: "+sem+sec+"                                                                                              Cumulative Attendance Record: "+finalDate);
 	      
 	     
 	      
@@ -909,10 +1101,12 @@ public class Attendance
              ref.addListenerForSingleValueEvent(
           		new ValueEventListener() {
 	              public void onDataChange(DataSnapshot d) {
-	            	  if(d.hasChild(tfsem))
+	            	  if(d.hasChild(sem))
 	            	  {
-	            		  System.out.println(d.child(tfsem).getValue().toString());
-	            		  subs = d.child(tfsem).getValue().toString().split(",");
+	            		  System.out.println(d.child(sem).getValue().toString());
+	            		  subs = d.child(sem).getValue().toString().split(",");
+	            		  for(int x=0;x<subs.length;x++)
+	            			  subs[x]=subs[x].trim();
 	            		  
 	            	  }
 	            	  else
@@ -943,7 +1137,7 @@ public class Attendance
 	  	{
 	  		XWPFTableCell cell4=tableRowOne.createCell();
 		  	run1 = cell4.addParagraph().createRun();
-		  	run1.setBold(true);run1.setText(subs[x]);run1.setFontSize(12);
+		  	run1.setBold(true);run1.setText(subs[x].trim());run1.setFontSize(12);
 		  	cell4.removeParagraph(0);
 		  	CTTcPr tcpr2 = cell4.getCTTc().addNewTcPr();
 		  	CTHMerge vMerge2=tcpr2.addNewHMerge();
@@ -1080,16 +1274,16 @@ public class Attendance
 	  	
 	  	
 	  	XWPFTableCell cel = tableRowOne1.createCell();
-	  	//cel.setText("Classes Conducted ->");
+	  	cel.setText("Classes Conducted ->");
 	  	XWPFRun run9 = cel.addParagraph().createRun();
-	  	run9.setBold(true);run9.setText(" ");run9.setFontSize(9);
+	  	run9.setBold(true);run9.setText("Classes Conducted ->");run9.setFontSize(10);
 	  	cel.removeParagraph(0);
-	  	
+	  	int y=0;
         
 	  	for(int i = 0;i<subs.length;i++)
 	  	{
 	  		XWPFTableCell cell22=tableRowOne1.createCell();
-		  	cell22.setText(" ");
+		  	//cell22.setText("ba");
 		  	CTTcPr tcpr20 = cell22.getCTTc().addNewTcPr();
 		  	CTHMerge vMerge20=tcpr20.addNewHMerge();
 		  	vMerge20.setVal(STMerge.RESTART); 
@@ -1150,7 +1344,7 @@ public class Attendance
 	       
 	     
 	                                                                                                                                    // "+studdat.get(0)+studdat.get(1)+"-"+sub+"\\"+finalDate+".xls");        
-	      InputStream ExcelFileToRead = new FileInputStream("C:\\Users\\"+System.getProperty("user.name")+"\\Documents\\SDM\\Attendance\\"+studdat.get(0)+studdat.get(1)+"-"+coursecode+"\\"+finalDate+".xls");
+	      InputStream ExcelFileToRead = new FileInputStream("C:\\Users\\"+System.getProperty("user.name")+"\\Documents\\SDM\\Attendance\\"+sem+sec+".xls");
 	  	HSSFWorkbook wb = new HSSFWorkbook(ExcelFileToRead);
 	  	HSSFSheet sheet = wb.getSheetAt(0);
 	  	HSSFRow row; 
@@ -1170,8 +1364,24 @@ public class Attendance
 	      
 	  	}
 
-	  	System.out.println(names);
+	  	System.out.println(big);
+	  	int ar[] = new int [subs.length];
+	  	for(int u=0;u<subs.length;u++)
+	  		ar[u] = 0;
 	  	
+	  	/*
+	  	int cellno =0;
+	  	int l=0, ctr=0;
+	  	while(l<big.size())
+	  	{
+	  		
+	  		l = (ctr*4)+3;  
+	  		if(l<big.size())
+	  			table.getRow(2).getCell(cellno+3).setText(big.get(l).get(0));
+	  		ctr = ctr+1;
+	  		//System.out.println(big.get((l*4)+3));
+	  		cellno = cellno+2;
+	  	}*/
 	  	
 	  	
 	  	for(int i=0;i<names.size();i++)
@@ -1189,22 +1399,58 @@ public class Attendance
 	  		{
 	  			table.getRow(i+4).createCell().setText("");
 	  			table.getRow(i+4).createCell().setText("");
-	  			for(int m = 0; m<big.size();  m++)
-	  			System.out.println(big.get(m));
-		  		for(int x=0; x < big.size(); x=x+3)
+	  			//for(int m = 0; m<big.size();  m++)
+	  		//	System.out.println(big.get(m));
+	  			
+	  			for(int x=0; x < big.size(); x=x+3)
 		  		{
-		  			//System.out.println(big.get(x).get(0)+"-"+table.getRow(1).getCell(k+3).getText().toString()+"-"+((k/2)+3));
-			  		if(big.get(x).get(0).equalsIgnoreCase(table.getRow(1).getCell(k+3).getText().toString()))
+			  		if((big.get(x).get(0).trim().equalsIgnoreCase(table.getRow(1).getCell(k+3).getText().toString().trim())))
 			  		{
+			  			//table.getRow(2).getCell(k+3).setText(String.valueOf(var));
 			  			table.getRow(i+4).getCell(k+3).setText(big.get(x+1).get(i).toString());
+			  			
+			  			if(big.get(x+2).get(i).equals("-"))
+			  				table.getRow(i+4).getCell(k+4).setColor("FC9060");
+			  			else
+			  			{
+			  			if(Integer.parseInt(big.get(x+2).get(i)) > 85)
+			  				table.getRow(i+4).getCell(k+4).setColor("C5FB7B");
+			  			else if(Integer.parseInt(big.get(x+2).get(i)) >= 75 &&  Integer.parseInt(big.get(x+2).get(i)) <= 85 )
+			  				table.getRow(i+4).getCell(k+4).setColor("FEF975");
+			  			else
+			  				table.getRow(i+4).getCell(k+4).setColor("FC9060");
+			  			}
 			  			table.getRow(i+4).getCell(k+4).setText(big.get(x+2).get(i).toString());
+			  			
+			  		/*if(!big.get(x+2).get(i).equals("-"))
+			  		{
+				  		if(Integer.parseInt(big.get(x+2).get(i)) != 0)
+				  		{
+				  			 int var = (Integer.parseInt(big.get(x+1).get(i))*100)/Integer.parseInt(big.get(x+2).get(i));
+				  			 if(var>ar[k/2] && k/2<subs.length)
+				  			 {
+				  				 ar[k/2]=var;
+				  				//table.getRow(2).getCell(k+3).setText(String.valueOf(ar[k/2]));
+				  				
+				  			 }
+			  			
+			  			 
+			  			}
+			  		}*/
+			  		
+			  				
 			  		}
+			  		
+			  		
 		  		}
+	  			
 	  			k = k + 2;
+	  			
 	  		}
 	  	}
+	 
 	  	
-	  	File path=new File("C:\\Users\\"+System.getProperty("user.name")+"\\Documents\\SDM\\Attendance\\Consolidated\\"+studdat.get(0)+studdat.get(1)+"\\"+studdat.get(0)+studdat.get(1)+"consolidated["+finalDate+"].docx");
+	  	File path=new File("C:\\Users\\"+System.getProperty("user.name")+"\\Documents\\SDM\\Attendance\\Consolidated\\"+sem+sec+"\\"+sem+sec+"consolidated["+finalDate+"].docx");
 	  	FileOutputStream fileOut = new FileOutputStream(path);
         docX2.write(fileOut);
         fileOut.close();
@@ -1212,6 +1458,7 @@ public class Attendance
 	            System.out.println(".docx written successully");
 	              
 	}
+	
 	   
 	    
 	public static class Person {

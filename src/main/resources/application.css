@@ -48,3 +48,32 @@
 .text-area {
     text-area-background: #6464a5 ;
 }
+
+/*.red
+{
+	 -fx-background-color: red;
+}
+
+.yellow
+{
+	 -fx-background-color: yellow;
+}
+
+.green
+{
+	 -fx-background-color: green;
+}*/
+
+.red {
+    -fx-background-color: red;
+}
+
+.yellow {
+    -fx-background-color: yellow;
+}
+
+.green {
+    -fx-background-color: green;
+}
+
+

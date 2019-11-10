@@ -82,11 +82,31 @@
     <version>1.7.25</version>
     <scope>test</scope>
 </dependency>
+
+    <dependency>
+        <groupId>org.apache.poi</groupId>
+        <artifactId>ooxml-schemas</artifactId>
+        <version>1.3</version>
+    </dependency>
+    
 <dependency>
        <groupId>org.slf4j</groupId>
        <artifactId>slf4j-log4j12</artifactId>
        <version>1.7.5</version>
    </dependency>
+   
+   <dependency>
+	    <groupId>de.jensd</groupId>
+	    <artifactId>fontawesomefx-fontawesome</artifactId>
+	    <version>4.7.0-9.1.2</version>
+	</dependency>
+	
+	<dependency>
+		<groupId>de.jensd</groupId>
+		<artifactId>fontawesomefx</artifactId>
+		<version>8.9</version>
+	</dependency>
+
   </dependencies>
 	
 	<properties>
@@ -116,6 +136,51 @@
 
     </configuration>
 </plugin>
+
+<plugin>
+    <groupId>org.apache.maven.plugins</groupId>
+    <artifactId>maven-dependency-plugin</artifactId>
+    <executions>
+        <execution>
+            <id>copy-dependencies</id>
+            <phase>prepare-package</phase>
+            <goals>
+                <goal>copy-dependencies</goal>
+            </goals>
+            <configuration>
+                <outputDirectory>
+                    ${project.build.directory}/libs
+                </outputDirectory>
+            </configuration>
+        </execution>
+    </executions>
+</plugin>
+
+<plugin>
+    <groupId>org.apache.maven.plugins</groupId>
+    <artifactId>maven-jar-plugin</artifactId>
+    <configuration>
+        <archive>
+            <manifest>
+                <addClasspath>true</addClasspath>
+                <classpathPrefix>libs/</classpathPrefix>
+                <mainClass>
+                    application.Main
+                </mainClass>
+            </manifest>
+        </archive>
+    </configuration>
+</plugin>
+
+<plugin>
+    <groupId>com.zenjava</groupId>
+    <artifactId>javafx-maven-plugin</artifactId>
+    <version>8.8.3</version>
+    <configuration>
+        <mainClass>application.Main</mainClass>
+    </configuration>
+</plugin>
+
     </plugins>
 </build>
 </project>

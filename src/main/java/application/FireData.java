@@ -2,7 +2,7 @@ package application;
 
 public class FireData
 {
-	public String att, perc, sub, subs;
+	public String att, perc, sub, totalClasses;
 	
 	public FireData() {}
 	
@@ -12,7 +12,7 @@ public class FireData
     
     public String getSub() { return sub; }
     
-    public String getSubs() { return subs; }
+    public String getTotalClasses() { return totalClasses; }
     
     public void setAtt(String name) {
         this.att = name;
@@ -26,7 +26,7 @@ public class FireData
         this.sub = name;
     }
     
-    public void setSubs(String name) {
-        this.subs = name;
+    public void setTotalClasses(String name) {
+        this.totalClasses = name;
     }
 }

@@ -38,5 +38,7 @@
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/javafx"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/jxl"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/Poi"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
+	<classpathentry kind="lib" path="C:/Users/Nisha/Desktop/fontawesomefx-8.8.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>
